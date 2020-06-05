@@ -53,13 +53,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginRight="10dp"
-                android:text="@={studentViewModel.saveOrUpdateBtn}" />
+                android:text="@={studentViewModel.saveOrUpdateBtn}"
+                android:onClick="@={()->studentViewModel.save()}"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-
-
+                android:onClick="@={()->studentViewModel.deleteAll()}"
                 android:text="@={studentViewModel.deleteOrDeleteAll}" />
 
         </LinearLayout>

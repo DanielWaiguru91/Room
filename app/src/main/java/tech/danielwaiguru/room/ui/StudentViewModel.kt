@@ -30,7 +30,19 @@ class StudentViewModel(private val studentRepository: StudentRepository): ViewMo
         saveOrUpdateBtn.value = "Save"
         deleteOrDeleteAll.value = "Delete All"
     }
-    fun insertStudent(student: Student){
+    fun save(){
+        val name: String = inputName.value!!
+        val course = inputCourse.value!!
+        val department = inputDepartment.value!!
+        insertStudent(Student(0, name, course, department))
+        inputName.value = null
+        inputCourse.value = null
+        inputDepartment.value = null
+    }
+    fun deleteAll(){
+        deleteAllStudent()
+    }
+    private fun insertStudent(student: Student){
         viewModelScope.launch {
             studentRepository.insertStudent(student)
         }
@@ -45,7 +57,7 @@ class StudentViewModel(private val studentRepository: StudentRepository): ViewMo
             studentRepository.deleteStudent(student)
         }
     }
-    fun deleteAllStudent(){
+    private fun deleteAllStudent(){
         viewModelScope.launch {
             studentRepository.deleteAllStudents()
         }
