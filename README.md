@@ -25,7 +25,7 @@ For more information read [Android Documentation](https://developer.android.com/
     
 ```
    
-add kapt kotlin anotation processor plugin
+add kapt kotlin annotation processor plugin
 
 ```apply plugin: 'kotlin-kapt'```
 
