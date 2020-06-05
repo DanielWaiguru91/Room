@@ -1,15 +1,15 @@
 package tech.danielwaiguru.room.ui
 
 import androidx.databinding.Bindable
+import androidx.databinding.Observable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import tech.danielwaiguru.room.db.Student
-import tech.danielwaiguru.room.db.StudentDao
 import tech.danielwaiguru.room.db.StudentRepository
 
-class StudentViewModel(private val studentRepository: StudentRepository): ViewModel() {
+class StudentViewModel(private val studentRepository: StudentRepository): ViewModel(), Observable {
     val allStudents = studentRepository.allStudents
     @Bindable
     val inputName = MutableLiveData<String>()
@@ -61,5 +61,13 @@ class StudentViewModel(private val studentRepository: StudentRepository): ViewMo
         viewModelScope.launch {
             studentRepository.deleteAllStudents()
         }
+    }
+
+    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
+        TODO("Not yet implemented")
     }
 }
