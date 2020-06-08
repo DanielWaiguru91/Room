@@ -6,7 +6,7 @@ import androidx.room.*
 @Dao
 interface StudentDao {
     @Insert
-    suspend fun addStudent(student: Student)
+    suspend fun addStudent(student: Student):Long
     @Update
     suspend fun editStudent(student: Student)
     @Delete
