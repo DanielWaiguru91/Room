@@ -11,6 +11,8 @@ import tech.danielwaiguru.room.db.StudentRepository
 
 class StudentViewModel(private val studentRepository: StudentRepository): ViewModel(), Observable {
     val allStudents = studentRepository.allStudents
+    private var isUpdateOrDelete = false
+    lateinit var studentUpdateOrDelete : Student
     @Bindable
     val inputName = MutableLiveData<String>()
     @Bindable
@@ -39,28 +41,56 @@ class StudentViewModel(private val studentRepository: StudentRepository): ViewMo
         inputCourse.value = null
         inputDepartment.value = null
     }
-    fun deleteAll(){
-        deleteAllStudent()
+    fun deleteOrDeleteAll(){
+        if (isUpdateOrDelete){
+            deleteStudent(studentUpdateOrDelete)
+        }
+        else
+        {
+            deleteAllStudent()
+        }
+    }
+    fun updateStud(){
+        if (isUpdateOrDelete){
+            studentUpdateOrDelete.name = inputName.value.toString()
+            studentUpdateOrDelete.course = inputCourse.value.toString()
+            studentUpdateOrDelete.department = inputDepartment.value.toString()
+            updateStudent(studentUpdateOrDelete)
+        }
+
     }
     private fun insertStudent(student: Student){
         viewModelScope.launch {
             studentRepository.insertStudent(student)
         }
     }
-    fun updateStudent(student: Student){
+
+    private fun updateStudent(student: Student){
         viewModelScope.launch {
             studentRepository.updateStudent(student)
         }
     }
-    fun deleteStudent(student: Student){
+
+    private fun deleteStudent(student: Student){
         viewModelScope.launch {
             studentRepository.deleteStudent(student)
         }
     }
+
     private fun deleteAllStudent(){
         viewModelScope.launch {
             studentRepository.deleteAllStudents()
         }
+    }
+
+    fun initUpdateOrDelete(student: Student){
+        inputName.value = student.name
+        inputCourse.value = student.course
+        inputDepartment.value = student.department
+        isUpdateOrDelete = true
+        studentUpdateOrDelete = student
+        saveOrUpdateBtn.value = "Update"
+        deleteOrDeleteAll.value = "Delete"
     }
 
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {

@@ -55,5 +55,6 @@ class MainActivity : AppCompatActivity() {
     }
     private fun listItemClicked(student: Student){
         Toast.makeText(this, "Item ${student.name} clicked", Toast.LENGTH_LONG).show()
+        studentViewModel.initUpdateOrDelete(student)
     }
 }
